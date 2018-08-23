@@ -1,6 +1,6 @@
 rm(list = ls())
 library(graphics); library(compositions); library(mgcv);library(hydroGOF);library(psych)
-setwd("C:/Users/Alejandro/Desktop/poderosa/DBO")
+setwd("C:/....")
 
 file2<-"dqo_dbo.csv"; 
 data2<-read.csv(file=file2, header=TRUE, sep = ";", dec = "."); 
@@ -22,19 +22,28 @@ summary(GAM)
 
  ##también se puede estimar en función a la cantidad de datos, para eso se crea un data.frame()
  ##newd=data.frame(0:92)
-GAM_dbo=predict.gam(GAM,data.frame(data2[,3]))
-
+GAM_dbo=predict.gam(GAM,data.frame(0:92))
+GAM1=predict.gam(GAM)
 
 #Pasando esimaciones a base de datos
-data3=cbind(data2,GAM_dbo_dqo=GAM_dbo)
-write.csv(data2_dbo_dqo,file="C:/Users/Alejandro/Desktop/poderosa/DBO/data3_dbo_dqo.csv")
+data2=cbind(data2,GAM1=GAM1)
+write.csv(data3,file="C:/Users/Alejandro/Desktop/poderosa/DBO/data3.csv",sep=";",dec = ".")
 
 #Haciendo pruebas de calidad del modelo (NSE, RMSE)
-GAM1=predict.gam(GAM)
-data3=cbind(data3,GAM1)
 
-attach(data3)
-DBO=data3[,4]
-DBOC=data3[,8]
+attach(data2)
+DBO=data.frame(data2[,4])
+DBOC=data.frame(data2[,7])
 NSE(DBOC,DBO)
-rmse(DBOC,DBO)
+NSE(data.frame(GAM1),data.frame(DBO))
+rmse(data.frame(GAM1),data.frame(DBO))
+
+#Estimando para rango de valor deseado
+M1=predict.gam(GAM,data.frame(DQO=0:1500))
+
+plot(data2[,5],data2[,4],xlab="DQO",ylab="DBO",pch=1)
+points(data2[,5],data2[,7],col="blue",pch=2)
+legend("topright",legend=c("GAM","valor"),col=c("black","blue"),pch=c(1,2))
+
+
+#Validando modelo
