@@ -1,0 +1,27 @@
+rm(list = ls())
+library(graphics); library(compositions); library(mgcv);library(hydroGOF);library(psych)
+setwd("C:/Users/Alejandro/Desktop/poderosa/DBO")
+
+file2<-"dqo_dbo.csv"; 
+data2<-read.csv(file=file2, header=TRUE, sep = ";", dec = "."); 
+
+#Matriz de correlaciones
+pairs.panels(data2[,3:6])
+
+#Independencia de variables
+attach(data2)
+
+#Aplicando método al cuál se adecuá el modelo
+#*GAM (MÉTODO 1)
+kk=4
+GAM=gam(DBO~ s(DQO,k=kk), family=gaussian) 
+summary(GAM)
+     ###Se observa que a se ajusta bien el modelo (R-sq.(adj) =  0.908).
+
+#Estimando modelos
+GAM1=predict.gam(GAM)
+ ##también se puede estimar en función a la cantidad de datos, para eso se crea un data.frame()
+ ##newd=data.frame(0:92)
+GAM1_dbo=predict.gam(GAM,data.frame(data2[,3]))
+
+
