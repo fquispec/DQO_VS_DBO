@@ -19,9 +19,22 @@ summary(GAM)
      ###Se observa que a se ajusta bien el modelo (R-sq.(adj) =  0.908).
 
 #Estimando modelos
-GAM1=predict.gam(GAM)
+
  ##también se puede estimar en función a la cantidad de datos, para eso se crea un data.frame()
  ##newd=data.frame(0:92)
-GAM1_dbo=predict.gam(GAM,data.frame(data2[,3]))
+GAM_dbo=predict.gam(GAM,data.frame(data2[,3]))
 
 
+#Pasando esimaciones a base de datos
+data3=cbind(data2,GAM_dbo_dqo=GAM_dbo)
+write.csv(data2_dbo_dqo,file="C:/Users/Alejandro/Desktop/poderosa/DBO/data3_dbo_dqo.csv")
+
+#Haciendo pruebas de calidad del modelo (NSE, RMSE)
+GAM1=predict.gam(GAM)
+data3=cbind(data3,GAM1)
+
+attach(data3)
+DBO=data3[,4]
+DBOC=data3[,8]
+NSE(DBOC,DBO)
+rmse(DBOC,DBO)
