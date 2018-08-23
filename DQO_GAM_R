@@ -27,7 +27,7 @@ GAM1=predict.gam(GAM)
 
 #Pasando esimaciones a base de datos
 data2=cbind(data2,GAM1=GAM1)
-write.csv(data3,file="C:/Users/Alejandro/Desktop/poderosa/DBO/data3.csv",sep=";",dec = ".")
+write.csv(data3,file="C:/Users/......./data3.csv",sep=";",dec = ".")
 
 #Haciendo pruebas de calidad del modelo (NSE, RMSE)
 
